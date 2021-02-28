@@ -15,7 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-/** 获取用户授权信息-原生实现 */
+/** 获取用户授权信息-原生实现
+ *      微信公众号开发文档：https://developers.weixin.qq.com/doc/offiaccount/Custom_Menus/Creating_Custom-Defined_Menu.html
+ *      微信公众号测试账号：https://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo?action=showinfo&t=sandbox/index
+ */
 Route::get('wxcode', 'WechatOriginOfficialAccountController@wxcode');
 Route::get('wxtoken', 'WechatOriginOfficialAccountController@wxtoken');
 
@@ -29,9 +32,18 @@ Route::group(['middleware' => 'auth.laravel-wechat'], function () {
         $wechat = session('wechat.oauth_user.default'); //拿到授权用户资料
         dd($wechat); //打印出授权用户资料
     });
-    
-    Route::any('wechat','WechatOfficialAccountController@auth')->name('Login.WeChat');
+    Route::any('wechat/login','WechatOfficialAccountController@auth')->name('Login.WeChat');
 });
+
+/**
+ * 服务器验证 与 消息的接收与回复 都在这一个路由内完成交互
+ *      需要在 app/Http/Middleware/VerifyCsrfToken.php 中将该路由设置到$except(支持 * 的正则)中，排除微信相关路由
+ */
+Route::any('wechat/subscription','WechatOfficialAccountController@subscription')->name('Login.WeChat');
+
+// 发布微信公众号菜单
+Route::get('wechat/createMenu','WechatOfficialAccountController@createMenu');
+
 // 商品首页无需登录
 Route::get('products','ProductController@index')->name('products.index');
 

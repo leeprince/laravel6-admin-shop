@@ -130,4 +130,42 @@ return [
     //          //...
     //      ],
     // ],
+    
+    /**
+     * 微信公众号菜单栏；在 leeprince/laravel-wechat-shop 开发的组件包中 ./src/Wap/Shop/Http/Controllers/WechatMenuController.php 同样有定义
+     */
+    'buttons' => [
+        [
+            "type" => "view",
+            "name" => "laravel 商城",
+            "url"  => "http://e6yn87.natappfree.cc/LaravelWechatShopWapShop"
+        ],
+        [
+            "name"       => "菜单",
+            "sub_button" => [
+                [
+                    "type" => "view",
+                    "name" => "搜索",
+                    "url"  => "http://www.soso.com/"
+                ],
+                [
+                    "type" => "view",
+                    "name" => "视频",
+                    "url"  => "http://v.qq.com/"
+                ],
+                [
+                    "type" => "click",
+                    "name" => "赞一下我们",
+                    "key" => "V1001_GOOD"
+                ],
+                [
+                    "type" => "view",
+                    "name" => "微信授权登陆",
+                    "url" => "http://e6yn87.natappfree.cc/LaravelWechatShopWapMember/wechatLogin"
+                ],
+            ],
+        ],
+    ],
+    
+    
 ];
